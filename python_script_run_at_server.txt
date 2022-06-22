@@ -1,0 +1,39 @@
+import Pycluster
+import pandas
+with open('AM2_full_data_p_standard.tsv', "r") as f:
+	record = Pycluster.read(f)
+data_input = pandas.read_table('AM2_full_data_p_standard.tsv')
+tree = record.treecluster(transpose=False, method="a", dist="a")
+record.save("python_AM2_full_data_p_standard_a_a", tree)
+tree_cut1000 = tree.cut(1000)
+data1000 = data_input
+data1000['cut'] = tree_cut1000
+data_cols1000 = data1000.columns.tolist()
+data_cols1000 = data_cols1000[-1:] + data_cols1000[:-1]
+data1000 = data1000[data_cols1000]
+data_sorted1000 = data1000.sort_values('cut')
+tree_cut2500 = tree.cut(2500)
+data2500 = data_input
+data2500['cut'] = tree_cut2500
+data_cols2500 = data2500.columns.tolist()
+data_cols2500 = data_cols2500[-1:] + data_cols2500[:-1]
+data2500 = data2500[data_cols2500]
+data_sorted2500 = data2500.sort_values('cut')
+tree_cut5000 = tree.cut(5000)
+data5000 = data_input
+data5000['cut'] = tree_cut5000
+data_cols5000 = data5000.columns.tolist()
+data_cols5000 = data_cols5000[-1:] + data_cols5000[:-1]
+data5000 = data5000[data_cols5000]
+data_sorted5000 = data5000.sort_values('cut')
+tree_cut10000 = tree.cut(10000)
+data10000 = data_input
+data10000['cut'] = tree_cut10000
+data_cols10000 = data10000.columns.tolist()
+data_cols10000 = data_cols10000[-1:] + data_cols10000[:-1]
+data10000 = data10000[data_cols10000]
+data_sorted10000 = data10000.sort_values('cut')
+data_sorted1000.to_csv("data_sorted1000_p.tsv", sep="\t")
+data_sorted2500.to_csv("data_sorted2500_p.tsv", sep="\t")
+data_sorted5000.to_csv("data_sorted5000_p.tsv", sep="\t")
+data_sorted10000.to_csv("data_sorted10000_p.tsv", sep="\t")
